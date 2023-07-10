@@ -1,0 +1,10 @@
+Number of bodies : 10
+Mass of those bodies :  1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+Number of Fourier coefficients in each loop : 7200
+Number of integration points for the action : 14400
+Value of the Action : 747.2046975021
+Value of the Norm of the Gradient of the Action : 1.0650412501E-12
+Sum of Newton Errors : 3.1638555759E-14
+Minimum inter-body distance : 1.3941653325E-02
+Hash Action for duplicate detection :  12.2870706836870074 8.1244826694547196 3.6391056149785461
+Escaped detection :  False  0.0743625486 0.0167275839 0.0224946350

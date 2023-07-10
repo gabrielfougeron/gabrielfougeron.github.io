@@ -1,0 +1,43 @@
+{% assign width_percent = include.width_percent | default: "100" %}
+
+{% assign min = 0 %}
+{% assign max = 1000000 %}
+{% assign diff = max | minus: min %}
+{% assign UniqueID = "now" | date: "%N" | modulo: diff | plus: min %}
+
+<style>
+  .one-video-{{ UniqueID }} {overflow: auto; margin-left: -1%!important;}
+  .one-video-{{ UniqueID }} li {float: left; display: block; margin: 0 0 1% 1%; width: {{ width_percent | minus:1 }}%;}
+  .one-video-{{ UniqueID }} li a {text-align: center; text-decoration: none!important; color: #777;}
+  .one-video-{{ UniqueID }} li a span {display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; padding: 3px 0;}
+  .one-video-{{ UniqueID }} li a video {width: 100%; display: block;}
+</style>
+
+{% assign filepath = include.file %}
+
+{% assign filenameparts = filepath | split: "/" %}
+{% assign filename = filenameparts | last | replace: file.extname,"" %}
+
+<ul class="one-video-{{ UniqueID }}">
+  <li style="text-align:center">
+    <a>
+      <div style="text-align:center"> 
+        <video id="video_{{ UniqueID }}" onclick="playPause_{{ UniqueID }}()" loop>
+          <source src="{{ filepath }}" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+        <br><br>
+      </div> 
+
+      <script> 
+      function playPause_{{ UniqueID }}() { 
+        var the_video = document.getElementById("video_{{ UniqueID }}");
+        if (the_video.paused) 
+        the_video.play(); 
+        else 
+        the_video.pause(); 
+      } 
+      </script> 
+    </a>
+  </li>
+</ul>

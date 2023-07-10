@@ -1,0 +1,106 @@
+
+{% if include.video_file %}
+  
+  {% assign width_percent = include.width_percent | default: "100" %}
+
+  {% assign video_file = include.video_file %}
+
+  {% assign filenameparts = video_file | split: "/" %}
+  {% assign filename = filenameparts | last | replace: file.extname,"" %}
+
+  <style>
+    .one-video {overflow: auto; margin-left: -1%!important;}
+    .one-video li {float: left; display: block; margin: 0 0 1% 1%; width: {{ width_percent | minus:1 }}%;}
+    .one-video li a {text-align: center; text-decoration: none!important; color: #777;}
+    .one-video li a span {display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; padding: 3px 0;}
+    .one-video li a video {width: 100%; display: block;}
+  </style>
+
+  <ul class="one-video">
+    <li style="text-align:center">
+      <a>
+        <div style="text-align:center"> 
+          <video id="video" onclick="playPause()" loop>
+            <source src="{{ video_file }}" type="video/mp4">
+            Your browser does not support HTML video.
+          </video>
+          <br><br>
+        </div> 
+
+        <script> 
+        function playPause() { 
+          var the_video = document.getElementById("video");
+          if (the_video.paused) 
+          the_video.play(); 
+          else 
+          the_video.pause(); 
+        } 
+        </script> 
+      </a>
+    </li>
+  </ul>
+
+{% endif %}
+
+{% if include.image_folder %}
+
+  {% assign npl = include.items_per_line | default: "5" %}
+  {% assign display_name = include.display_name | default: false %}
+  
+  {% assign min = 0 %}
+  {% assign max = 1000000 %}
+  {% assign diff = max | minus: min %}
+  {% assign UniqueID = "now" | date: "%N" | modulo: diff | plus: min %}
+  
+  <style>
+    .image-gallery-{{npl}}-{{UniqueID}} {overflow: auto; margin-left: -1%!important;}
+    .image-gallery-{{npl}}-{{UniqueID}} li {float: left; display: block; margin: 0 0 1% 1%; width: {{ 100 | divided_by:npl | minus:1 }}%;}
+    .image-gallery-{{npl}}-{{UniqueID}} li a {text-align: center; text-decoration: none!important; color: #777;}
+    .image-gallery-{{npl}}-{{UniqueID}} li a span {display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; padding: 3px 0;}
+    .image-gallery-{{npl}}-{{UniqueID}} li a img {width: 100%; display: block;}
+  </style>
+  
+  <ul class="image-gallery-{{npl}}-{{UniqueID}}">
+    {% for file in site.static_files %}
+      {% if file.path contains include.image_folder %}
+        {% if file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.JPG' or file.extname == '.JPEG' or file.extname == '.png' %}
+          {% assign filenameparts = file.path | split: "/" %}
+          {% assign filename = filenameparts | last | replace: file.extname,"" %}
+          {% if filename contains "_thumb" %}
+          {% else %}
+            {% assign filename_thumb =  file.path | replace: file.extname,"_thumb.png" %}
+            {% assign new_vid_filename =  file.path | replace: file.extname,".mp4" %}
+            <li>
+              <a {% if display_name %} title="{{ filename }}" {% endif %}>
+                <img src="{{ filename_thumb }}" alt="{{ filename }}"  title="{{ filename }}" onclick="ChangeVid_{{ UniqueID }}_{{ filename }}()" />
+                {% if display_name %}
+                  <span>{{ filename }}</span>
+                {% endif %}
+              </a>
+            </li>
+
+            <script> 
+              function ChangeVid_{{ UniqueID }}_{{ filename }}() { 
+                var the_video = document.getElementById("video");
+                var was_paused = the_video.paused;
+
+                the_video.src = "{{ new_vid_filename }}";
+
+                if (was_paused)
+                  the_video.pause(); 
+                else 
+                  the_video.play(); 
+
+              } 
+              </script> 
+
+
+          {% endif %}
+  
+  
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+{% endif %}

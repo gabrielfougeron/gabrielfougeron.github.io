@@ -1,0 +1,6 @@
+{
+    "[markdown]": {
+    },
+    "frontMatter.framework.startCommand": "bundle exec jekyll serve --livereload --incremental --force_polling",
+    "frontMatter.preview.host": "http://localhost:4000"
+}

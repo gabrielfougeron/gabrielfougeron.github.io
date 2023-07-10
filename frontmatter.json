@@ -1,0 +1,23 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.framework.id": "jekyll",
+  "frontMatter.content.publicFolder": "assets",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "drafts",
+      "path": "[[workspace]]/_drafts"
+    },
+    {
+      "title": "posts",
+      "path": "[[workspace]]/_posts"
+    },
+    {
+      "title": "_pages",
+      "path": "[[workspace]]/_pages"
+    },
+    {
+      "title": "_publications",
+      "path": "[[workspace]]/_publications"
+    }
+  ]
+}

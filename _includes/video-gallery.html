@@ -1,0 +1,56 @@
+{% assign npl = include.items_per_line | default: "2" %}
+{% assign display_name = include.display_name | default: false %}
+
+{% assign min = 0 %}
+{% assign max = 1000000 %}
+{% assign diff = max | minus: min %}
+{% assign UniqueID = "now" | date: "%N" | modulo: diff | plus: min %}
+
+<style>
+  .video-gallery-{{npl}}-{{UniqueID}} {overflow: auto; margin-left: -1%!important;}
+  .video-gallery-{{npl}}-{{UniqueID}} li {float: left; display: block; margin: 0 0 1% 1%; width: {{ 100 | divided_by:npl | minus:1 }}%;}
+  .video-gallery-{{npl}}-{{UniqueID}} li a {text-align: center; text-decoration: none!important; color: #777;}
+  .video-gallery-{{npl}}-{{UniqueID}} li a span {display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; padding: 3px 0;}
+  .video-gallery-{{npl}}-{{UniqueID}} li a video {width: 100%; display: block;}
+</style>
+
+<ul class="video-gallery-{{npl}}-{{UniqueID}}">
+  {% for file in site.static_files %}
+    {% if file.path contains include.folder %}
+      {% if file.extname == '.mp4'%}
+        {% assign filenameparts = file.path | split: "/" %}
+        {% assign filename = filenameparts | last | replace: file.extname,"" %}
+        {% if filename contains "_thumb" %}
+        {% else %}
+          {% assign filename_thumb =  file.path | replace: file.extname,"_thumb.png" %}
+          <li>
+            <a {% if display_name %} title="{{ filename }}" {% endif %}>
+
+              <div style="text-align:center"> 
+                <video id="video_{{ filename }}_{{ UniqueID }}" onclick="playPause_{{filename}}_{{ UniqueID }}()" loop>
+                  <source src="{{ file.path | relative_url }}" type="video/mp4">
+                  Your browser does not support HTML video.
+                </video>
+                <br><br>
+              </div> 
+
+              <script> 
+              function playPause_{{filename}}_{{ UniqueID }}() { 
+                var the_video = document.getElementById("video_{{ filename }}_{{ UniqueID }}");
+                if (the_video.paused) 
+                the_video.play(); 
+                else 
+                the_video.pause(); 
+              } 
+              </script> 
+
+              {% if display_name %}
+              <span>{{ filename }}</span>
+              {% endif %}
+            </a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</ul>
