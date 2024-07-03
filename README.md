@@ -1,4 +1,4 @@
-My personnal website hosted at https://gabrielfougeron.github.io/. 
+My personal website hosted at https://gabrielfougeron.github.io/. 
 
 Template from https://academicpages.github.io/ .
 
