@@ -2,6 +2,9 @@
 layout: none
 ---
 User-agent: *
-Sitemap: {{ site.url }}/sitemap.xml 
-Sitemap: {{ site.url }}/pyquickbench/sitemap.xml
-Sitemap: {{ site.url }}/choreo/sitemap.xml
+
+Disallow: # Allow everything
+
+Sitemap: {{ site.url }}sitemap.xml 
+Sitemap: {{ site.url }}pyquickbench/sitemap.xml
+Sitemap: {{ site.url }}choreo/sitemap.xml
